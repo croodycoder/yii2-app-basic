@@ -1,9 +1,25 @@
-version: '2'
+version: '3.8'
+
 services:
   php:
-    image: yiisoftware/yii2-php:7.4-apache
-    volumes:
-      - ~/.composer-docker/cache:/root/.composer/cache:delegated
-      - ./:/app:delegated
+    build:
+      context: .
+    image: yii2app-custom
     ports:
       - '8000:80'
+    networks:
+      - app-net
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - yii2app-data:/var/www/html  # Named volume, safe in Swarm
+
+volumes:
+  yii2app-data:
+
+networks:
+  app-net:
+    driver: overlay
+
