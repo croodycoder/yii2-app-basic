@@ -1,0 +1,8 @@
+---
+- name: Deploy Yii2 app as Swarm service
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Deploy PHP service
+      shell: docker stack deploy -c /app/docker-compose.yml yii2app
