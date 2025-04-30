@@ -1,0 +1,20 @@
+---
+- name: Initialize Docker Swarm
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Initialize Docker Swarm
+      shell: docker swarm init
+      when: ansible_facts['distribution'] == 'Ubuntu'
+      ignore_errors: yes
+
+    - name: Get join token for workers
+      shell: docker swarm join-token worker -q
+      register: worker_token
+      when: ansible_facts['distribution'] == 'Ubuntu'
+      ignore_errors: yes
+
+    - name: Display join token for workers
+      debug:
+        var: worker_token.stdout
