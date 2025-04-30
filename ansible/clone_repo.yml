@@ -1,0 +1,11 @@
+---
+- name: Clone the Yii2 repo
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Clone repository
+      git:
+        repo: 'https://github.com/croodycoder/yii2-app-basic.git'
+        dest: /app
+        version: master
