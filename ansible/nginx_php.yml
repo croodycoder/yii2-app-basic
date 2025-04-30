@@ -1,0 +1,32 @@
+---
+- name: Install NGINX, Git, PHP dependencies
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Install NGINX
+      apt:
+        name: nginx
+        state: latest
+
+    - name: Install Git
+      apt:
+        name: git
+        state: latest
+
+    - name: Install PHP dependencies
+      apt:
+        name:
+          - php
+          - php-fpm
+          - php-mysql
+          - php-cli
+          - php-xml
+          - php-mbstring
+        state: latest
+
+    - name: Start and enable NGINX service
+      systemd:
+        name: nginx
+        enabled: yes
+        state: started
